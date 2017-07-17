@@ -20,7 +20,6 @@ import java.util.Collection;
 import java.util.Random;
 
 import io.realm.Realm;
-import io.realm.RealmQuery;
 import io.realm.RealmResults;
 
 public class MainActivity extends AppCompatActivity {
@@ -31,7 +30,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         Realm realm = Realm.getDefaultInstance();
-        RealmQuery<Jap> query = realm.where(Jap.class);
         DateFormat dateFormat = new SimpleDateFormat("dd-M-yyyy");
         Calendar cal = Calendar.getInstance();
         String date = dateFormat.format(cal.getTime());
