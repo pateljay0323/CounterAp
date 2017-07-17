@@ -68,7 +68,6 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.action_settings) {
-            // launch settings activity
             startActivity(new Intent(MainActivity.this, SettingsActivity.class));
             return true;
         }
