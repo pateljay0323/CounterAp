@@ -70,6 +70,7 @@ public class JapEntryActivity extends AppCompatActivity implements DatePickerDia
                             jap.setDate(dateEditText.getText().toString().trim());
                             jap.setJapCount(japCount);
                             Toast.makeText(JapEntryActivity.this,"Saved Successfully",Toast.LENGTH_SHORT).show();
+                            finish();
                         }
                     });
                 }

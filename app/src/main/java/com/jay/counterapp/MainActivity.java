@@ -29,6 +29,19 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        FloatingActionButton floatingActionButton = (FloatingActionButton) findViewById(R.id.floatingActionButton);
+        floatingActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, JapEntryActivity.class);
+                startActivity(intent);
+            }
+        });
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
         Realm realm = Realm.getDefaultInstance();
         DateFormat dateFormat = new SimpleDateFormat("dd-M-yyyy");
         Calendar cal = Calendar.getInstance();
@@ -41,19 +54,10 @@ public class MainActivity extends AppCompatActivity {
             values.add(new FitChartValue(res.getJapCount(), Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256))));
         }
 
-        final FitChart fitChart = (FitChart)findViewById(R.id.fitChart);
+        final FitChart fitChart = (FitChart) findViewById(R.id.fitChart);
         fitChart.setMinValue(0f);
         fitChart.setMaxValue(10000f);
         fitChart.setValues(values);
-
-        FloatingActionButton floatingActionButton = (FloatingActionButton) findViewById(R.id.floatingActionButton);
-        floatingActionButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, JapEntryActivity.class);
-                startActivity(intent);
-            }
-        });
     }
 
     @Override
