@@ -1,7 +1,5 @@
 package com.jay.counterapp;
 
-import java.util.Date;
-
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
@@ -15,7 +13,7 @@ public class Jap extends RealmObject {
 
     private int japCount;
 
-    private Date date;
+    private String date;
 
     public long getId() {
         return id;
@@ -33,11 +31,11 @@ public class Jap extends RealmObject {
         this.japCount = japCount;
     }
 
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
     }
 }

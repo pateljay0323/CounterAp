@@ -2,11 +2,12 @@ package com.jay.counterapp;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
 import com.txusballesteros.widgets.FitChart;
 import com.txusballesteros.widgets.FitChartValue;
@@ -16,7 +17,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
-import java.util.Date;
 import java.util.Random;
 
 import io.realm.Realm;
@@ -32,29 +32,20 @@ public class MainActivity extends AppCompatActivity {
 
         Realm realm = Realm.getDefaultInstance();
         RealmQuery<Jap> query = realm.where(Jap.class);
-        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        DateFormat dateFormat = new SimpleDateFormat("dd-M-yyyy");
         Calendar cal = Calendar.getInstance();
-        Date date = new Date(dateFormat.format(cal.getTime()));
-//        query.equalTo("date", date);
-        RealmResults<Jap> result = query.findAll();
-        for (Jap res : result){
-            Toast.makeText(MainActivity.this,"Id : "+res.getId()+"\nDate : "+res.getDate()+"\nJap Count : "+res.getJapCount(),Toast.LENGTH_SHORT).show();
-        }
+        String date = dateFormat.format(cal.getTime());
+        RealmResults<Jap> result = realm.where(Jap.class).equalTo("date", date.toString()).findAll();
 
-//        final FitChart fitChart = (FitChart)findViewById(R.id.fitChart);
-//        fitChart.setMinValue(0f);
-//        fitChart.setMaxValue(100f);
         Random rnd = new Random();
         Collection<FitChartValue> values = new ArrayList<>();
-//        values.add(new FitChartValue(30, getResources().getColor(android.R.color.holo_red_light)));
-        values.add(new FitChartValue(30, Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256))));
-//        values.add(new FitChartValue(20, getResources().getColor(android.R.color.holo_blue_dark)));
-        values.add(new FitChartValue(20, Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256))));
-//        values.add(new FitChartValue(15, getResources().getColor(android.R.color.holo_green_dark)));
-        values.add(new FitChartValue(15, Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256))));
-//        values.add(new FitChartValue(10, getResources().getColor(android.R.color.holo_orange_dark)));
-        values.add(new FitChartValue(10, Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256))));
+        for (Jap res : result) {
+            values.add(new FitChartValue(res.getJapCount(), Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256))));
+        }
+
         final FitChart fitChart = (FitChart)findViewById(R.id.fitChart);
+        fitChart.setMinValue(0f);
+        fitChart.setMaxValue(10000f);
         fitChart.setValues(values);
 
         FloatingActionButton floatingActionButton = (FloatingActionButton) findViewById(R.id.floatingActionButton);
@@ -65,5 +56,22 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.action_settings) {
+            // launch settings activity
+            startActivity(new Intent(MainActivity.this, SettingsActivity.class));
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
